@@ -11,6 +11,26 @@ function getVideo() {
       video.play();
     })
     .catch(err => {
-      console.error('Please allow access to webcam');
+      console.error(`Please allow access to webcam`, err);
     });
 }
+
+function paintToCanvas() {
+  const width = video.videoWidth;
+  const height = video.videoHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  return setInterval(() => {
+    ctx.drawImage(video, 0, 0, width, height);
+  }, 16);
+}
+
+function takePhoto() {
+  snap.currentTime = 0;
+  snap.play();
+}
+
+getVideo();
+
+video.addEventListener('canplay', paintToCanvas);
